@@ -20,6 +20,7 @@ This project provides a robust Docker and Docker Compose configuration for quick
 - **.env**: An environment file for variables used by Docker Compose.
 - **run.sh**: A convenience script for launching the application.
 - **ComfyUI_data/**: The most important directory. This is the folder on your host machine that serves as the permanent storage for all your ComfyUI data.
+- **filebrowser_data/**: Stores persistent data and configuration for the Filebrowser service (database and settings).
 
 ---
 
@@ -35,6 +36,13 @@ This project provides a robust Docker and Docker Compose configuration for quick
 - **output/**: ComfyUI will save all your generated images, videos, and other outputs here. Your results will be safely stored on your host machine.
 - **custom_nodes/**: A critical folder for extensibility. When you install third-party nodes (e.g., via `git clone`), they live here. Persisting this folder saves you from having to reinstall all your extensions every time you restart or update the container.
 - **comfyui_config.json**: This small but important file stores your personal UI settings, such as enabled options, the last used workflow, and other configuration tweaks. Persisting it makes your user experience seamless.
+
+---
+
+### Detailed Breakdown of the `filebrowser_data` Contents
+
+- **database/**: Contains the Filebrowser SQLite database file (`filebrowser.db`) for user and file metadata.
+- **config/**: Stores Filebrowser configuration files (such as `settings.json`).
 
 ---
 
@@ -115,7 +123,9 @@ cd docker-comfyui
 ```bash
 sudo chmod -R 777 ComfyUI_data/
 ```
-
+```bash
+sudo chmod -R 777 filebrowser_data/
+```
 **Create the required host directories:**
 
 Create further structure (such as `ComfyUI_data/models/checkpoints`, `ComfyUI_data/models/loras`, etc.) as needed following the instructions of ComfyUI. In the example below you need to create a `vae`, `text_encoders` and `diffusion_models` folders in `ComfyUI_data/models` dir
