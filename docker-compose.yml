@@ -2,7 +2,7 @@ services:
   comfyui:
     container_name: comfyui_service
     build: .
-    image: comfyui-app:latest
+    image: comfyui-app:v1_pao
     restart: on-failure
     ports:
       - "${COMFYUI_PORT_HOST}:8188"
