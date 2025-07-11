@@ -118,7 +118,7 @@ sudo chmod -R 777 ComfyUI_data/
 
 **Create the required host directories:**
 
-Create further structure (such as `ComfyUI_data/models/checkpoints`, `ComfyUI_data/models/loras`, etc.) as needed following the instructions of ComfyUI. In example below you need to create a vae, text_encoders and diffusion_models folders in `ComfyUI_data/models` dir
+Create further structure (such as `ComfyUI_data/models/checkpoints`, `ComfyUI_data/models/loras`, etc.) as needed following the instructions of ComfyUI. In the example below you need to create a `vae`, `text_encoders` and `diffusion_models` folders in `ComfyUI_data/models` dir
 
 ![](README_IMG/MissingModels.png)
 
