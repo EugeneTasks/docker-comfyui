@@ -1,0 +1,42 @@
+services:
+  comfyui:
+    container_name: comfyui_service
+    build: .
+    image: comfyui-app:latest
+    restart: on-failure
+    ports:
+      - "${COMFYUI_PORT_HOST}:8188"
+    env_file:
+      - .env
+    volumes:
+      - ./ComfyUI_data/models:/home/comfyuser/app/models
+      - ./ComfyUI_data/input:/home/comfyuser/app/input
+      - ./ComfyUI_data/output:/home/comfyuser/app/output
+      - ./ComfyUI_data/custom_nodes:/home/comfyuser/app/custom_nodes
+      - ./ComfyUI_data/comfyui_config.json:/home/comfyuser/app/comfyui_config.json
+    deploy:
+      resources:
+        limits:
+          cpus: '${CPU_MAX_LIMIT:-4}'
+          memory: '${RAM_MAX_LIMIT:-16G}'
+        reservations:
+          cpus: '${CPU_MIN_LIMIT:-1}'
+          memory: '${RAM_MIN_LIMIT:-10G}'
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    memswap_limit: '${MEMORY_SWAP_MAX_LIMIT:-20G}'
+    # gpus:
+    #   - count: 1
+    #     capabilities: [gpu]
+    # memory: '${RAM_MIN_LIMIT:-10G}'
+    # memory-swap: '${MEMORY_SWAP_LIMIT:-10G}'
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '${CPU_MAX_LIMIT:-4}'
+    #       memory: '${RAM_MAX_LIMIT:-16G}'
+    #     reservations:
+    #       cpus: '${CPU_MIN_LIMIT:-1}'
+    #       memory: '${RAM_MIN_LIMIT:-10G}'
