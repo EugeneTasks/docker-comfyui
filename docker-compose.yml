@@ -3,7 +3,7 @@ services:
     container_name: comfyui_service
     build: .
     image: comfyui-app:v1_pao
-    restart: on-failure
+    restart: unless-stopped
     ports:
       - "${COMFYUI_PORT_HOST}:8188"
     env_file:
@@ -26,7 +26,7 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-    memswap_limit: '${MEMORY_SWAP_MAX_LIMIT:-20G}'
+    memswap_limit: '${MEMORY_SWAP_MAX_LIMIT:-16G}'
     # gpus:
     #   - count: 1
     #     capabilities: [gpu]
@@ -40,3 +40,17 @@ services:
     #     reservations:
     #       cpus: '${CPU_MIN_LIMIT:-1}'
     #       memory: '${RAM_MIN_LIMIT:-10G}'
+  filebrowser:
+    container_name: filebrowser_service
+    image: filebrowser/filebrowser:v2.37.0
+    restart: unless-stopped
+    ports:
+      - "${FILEBROWSER_PORT_HOST}:80"
+    volumes:
+      - ./ComfyUI_data/output:/srv/output
+      - ./filebrowser_data/database:/database
+      - ./filebrowser_data/config/:/config
+    command: 
+      --database /database/filebrowser.db 
+      --root /srv/output
+      --config /config/settings.json
